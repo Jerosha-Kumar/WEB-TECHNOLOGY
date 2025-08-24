@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Gadget Feedback Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fddbdd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 800px;  
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        h2 {
+            text-align: center;
+            color: #1d3557;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        input[type="range"] {
+            width: 90%;
+        }
+        button {
+            background: #1d3557;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 12px;
+        }
+        button:hover {
+            background: #457b9d;
+        }
+        .rating-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .rating-value {
+            font-weight: bold;
+            color: #e63946;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Smart Gadget Feedback Form</h2>
+        <form id="feedbackForm" onsubmit="return validateForm()">
+
+            <label>Full Name:</label>
+            <input type="text" id="name">
+
+            <label>Email:</label>
+            <input type="email" id="email">
+
+            <label>Password:</label>
+            <input type="password" id="password" placeholder="atleast 6 characters">
+
+            <label>Phone Number:</label>
+            <input type="tel" id="phone" placeholder="10 digits">
+
+            <label>Which Gadget are you giving feedback for?</label>
+            <select id="product">
+                <option value="">--Select--</option>
+                <option value="mirror">Smart Mirror</option>
+                <option value="airpurifier">Air Purifier</option>
+                <option value="robotvacuum">Robot Vacuum</option>
+            </select>
+
+            <label>Purchase Date:</label>
+            <input type="date" id="purchaseDate">
+
+            <label>How many units did you buy?</label>
+            <input type="number" id="quantity" min="1" max="5">
+
+            <label>Did you take extended warranty?</label><br>
+            <input type="radio" name="warranty" value="yes"> Yes
+            <input type="radio" name="warranty" value="no"> No <br><br>
+
+            <label>Which features do you use most?</label><br>
+            <input type="checkbox" name="features" value="voice"> Voice Control
+            <input type="checkbox" name="features" value="wifi"> Wi-Fi
+            <input type="checkbox" name="features" value="auto"> Auto Mode <br><br>
+
+            <label>Rate your gadget (1-10):</label>
+            <div class="rating-box">
+                <input type="range" id="rating" min="1" max="10" value="5" oninput="updateRating(this.value)">
+                <span class="rating-value" id="ratingValue">5</span>
+            </div>
+
+            <label>How was your Delivery Experience?</label>
+            <select id="deliveryExp">
+               <option value="">--Select--</option>
+               <option value="on-time">On-Time Delivery</option>
+               <option value="late">Arrived Late</option>
+               <option value="damaged">Damaged Packaging</option>
+               <option value="excellent">Excellent Service</option>
+            </select>
+
+
+
+            <label>Upload Invoice (optional):</label>
+            <input type="file">
+
+            <label>Your Feedback:</label>
+            <textarea id="feedback" rows="4" cols="40" placeholder="Write your feedback here..."></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function updateRating(val) {
+            document.getElementById("ratingValue").textContent = val;
+        }
+
+        function validateForm() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let product = document.getElementById("product").value;
+            let date = document.getElementById("purchaseDate").value;
+            let qty = document.getElementById("quantity").value;
+            let feedback = document.getElementById("feedback").value.trim();
+
+            if (name === "" || name.length < 3) {
+                alert("Enter a valid name (min 3 letters)");
+                return false;
+            }
+            if (email === "" || !email.includes("@")) {
+                alert("Enter a valid email");
+                return false;
+            }
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters");
+                return false;
+            }
+            if (phone.length !== 10 || isNaN(phone)) {
+                alert("Phone number must be 10 digits");
+                return false;
+            }
+            if (product === "") {
+                alert("Select a product");
+                return false;
+            }
+            if (date === "") {
+                alert("Please select a purchase date");
+                return false;
+            }
+            if (qty < 1 || qty > 5) {
+                alert("Quantity must be between 1 and 5");
+                return false;
+            }
+            if (feedback === "") {
+                alert("Please provide your feedback before submitting");
+                return false;
+            }
+
+            alert("Feedback submitted successfully 🎉");
+            return true;
+        }
+    </script>
+
+</body>
+</html>
